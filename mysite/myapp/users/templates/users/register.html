@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" 
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" 
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'profile_style2.css' %}" />
+    <title>User Profile</title>
+	
+</head>
+
+
+
+<body>
+
+    <nav class="top-navbar">
+       <!-- <div class="profile-icon">
+            <i class="fas fa-user-circle"></i>Create
+        </div>-->
+    </nav>
+
+    <nav class="left-navbar">
+        
+    </nav>
+
+    <center><div class="content"><br><br>
+         <div class="form-box login">
+            <h2 style="font-family:Noto Serif TC;">Create<br> Account </h2>
+			
+            <form action="{% url 'login' %}">
+			<div class="input_box">
+                    <!--<span class="icon"><i class="fa-solid fa-envelope"></i></span>-->
+                    
+                    <input type="text" placeholder="Username"  id="username" name="username" class="placeholder" required >
+                </div><br>
+				<div class="input_box">
+                   
+                   
+                    <input type="email" placeholder="Email" id="email" name="email"  class="placeholder" required>
+                </div><br>
+				<div class="input-box">
+                    
+                   
+                    <input type="password" placeholder="Password"  id="password" name="password" class="placeholder" required>
+                  </div><br>
+                <div class="input_box">
+                    
+                   
+                    <input type="password" placeholder="Confirm passwod" id="confirmpassword" name="confirmpassword"  class="placeholder" required>
+                </div><br>
+                
+                    
+                    
+                    <button type="submit" name="submit" id="submit"  >Sign up</button>
+                    
+					<br>
+					<br>
+					<br>
+					<div class="input_box">
+                   
+                   
+                    <span class="fa fa-google-plus"  ><input type="button"  value="Sign in with Google" ></span>
+					
+                </div><br>
+                    
+                    <div class="login-register">
+                        
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</body>
+
+</html>
+

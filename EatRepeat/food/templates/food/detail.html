@@ -1,0 +1,22 @@
+{%extends 'food/base.html'%}
+
+{%block body%}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <img height="300px" src="{{ item.item_image }}" class="card-img">
+        </div>
+        <div class="col-md-6">
+            <!-- here i use 'item' for accessing the object, it becomes by default by lowercasing the model name or we can use 'object' instead of 'item' -->
+            <h1>{{item.item_name}}</h1> 
+            <h2>{{item.item_desc}}</h2>
+            <h3>{{item.item_price}}</h3>
+            <a href="{% url 'food:delete_item' item.id %}">Delete</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
