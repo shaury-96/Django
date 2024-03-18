@@ -1,0 +1,28 @@
+body{
+    background:#181a1b;
+    color:#d1cdc7;
+}
+.row{
+    margin-top: 25px;
+    margin-bottom: 5px;
+    margin-left: 25px;
+}
+.cp{
+    margin-top: 25px;
+    border: none;
+    
+}
+.card-body{
+    background: #181a1b;
+    color:#d1cdc7;
+    border:none;
+}
+.card{
+    border: none;
+}
+.text-body-secondary{
+    color:#d1cdc7 !important;
+}
+.nav-link{
+    color: #d1cdc7;
+}
