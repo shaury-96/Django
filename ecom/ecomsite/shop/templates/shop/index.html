@@ -29,6 +29,11 @@
               <li class="nav-item">
                 <a class="nav-link" href="#">Home Decor</a>
               </li>
+              <li class="nav-item">
+                <button id="cart" data-html="true" type="button" class="btn btn-secondary" data-container="body" data-toggle="popover" data-placement="bottom" data-content="">
+                  Cart(0)
+                </button>
+              </li>
               
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -173,4 +178,75 @@
 
 
   </body>
+  
+<script type="text/javascript">
+    console.log('This is working');
+ 
+    if(localStorage.getItem('cart')==null){
+        var cart = {};
+    }
+    else{
+        cart = JSON.parse(localStorage.getItem('cart'));
+    }
+    
+ 
+    document.addEventListener('click',function(event){
+      if(event.target.classList.contains('atc')) {
+        console.log("The add to cart button is clicked");
+        var item_id = event.target.id.toString();
+        console.log(item_id);
+ 
+        if(cart[item_id]!=undefined)
+        {
+            quantity = cart[item_id][0] + 1;
+            cart[item_id][0] = quantity;
+            cart[item_id][2] = cart[item_id][2] + parseFloat(document.getElementById("price"+item_id).innerHTML);
+        }
+        else
+        {
+            quantity = 1;
+            price = parseFloat(document.getElementById("price"+item_id).innerHTML);
+            name = document.getElementById("nm"+item_id).innerHTML;
+            cart[item_id]=[quantity,name,price];
+        }
+        console.log(cart);
+        localStorage.setItem('cart',JSON.stringify(cart));
+        document.getElementById("cart").innerHTML = "Cart("+ Object.keys(cart).length +")";
+        DisplayCart(cart);
+      }
+      else if (event.target.id === 'cart') { 
+        DisplayCart(cart);
+    }
+       
+    });
+ 
+    // document.addEventListener('click',DisplayCart(cart));
+    function DisplayCart(cart){
+        var cartString ="";
+        cartString += "<h5>This is your cart</h5>";
+        var cartIndex = 1;
+        for(var x in cart){
+            cartString += cartIndex;
+            cartString += document.getElementById("nm"+x).innerHTML + "Qty:" + cart[x][0] + "</br>";
+            cartIndex+=1;
+        }
+ 
+        cartString += "<a href='/checkout'><button class='btn btn-warning' id='checkout'>Checkout</button></a>";
+        document.getElementById("cart").setAttribute('data-content',cartString);
+        // $('[data-toggle="popover"]').popover();
+        var cartElement = document.getElementById("cart");
+        var popover = cartElement.querySelector('.popover');
+        if (popover) {
+            popover.parentNode.removeChild(popover);
+        }
+
+        // Create new popover and initialize it
+        var popoverWrapper = document.createElement('div');
+        popoverWrapper.innerHTML = cartString;
+        cartElement.appendChild(popoverWrapper);
+        cartElement.setAttribute('data-content', popoverWrapper.innerHTML);
+    }
+ 
+ 
+</script>
 </html>
