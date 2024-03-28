@@ -36,3 +36,7 @@ def checkout(request):
         order.save()
  
     return render(request,'shop/checkout.html')
+
+def register(request):
+
+    return render(request,'shop/register.html')
