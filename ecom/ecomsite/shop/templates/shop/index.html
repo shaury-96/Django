@@ -1,0 +1,84 @@
+{% extends "shop/layout.html" %}
+
+{% load static %}
+
+{% block title %}Home - My Website{% endblock %}
+
+{% block content%}   
+      <div id="carouselExample" class="carousel slide">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="{% static 'shop/carousel.jpg' %}" class="d-block w-100" alt="...">
+          </div>
+          <div class="carousel-item">
+            <img src="{% static 'shop/carousel.jpg' %}" class="d-block w-100" alt="...">
+          </div>
+          <div class="carousel-item">
+            <img src="{% static 'shop/carousel.jpg' %}" class="d-block w-100" alt="...">
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+
+      <div class="row justify-content-center">
+        {% for product in product_objects %}
+            <div class="col-md-3">
+                <div class="card">
+                    <img src="{{ product.image }}" class="card-img-top">
+                    <div class="card-body">
+                        <div id="nm{{ product.id }}" class="card-title">{{ product.title }}</div>
+                        <div id="price{{ product.id }}" class="card-text">{{ product.price }}</div>
+     
+                        <a href="/{{ product.id }}" class="btn btn-warning">View</a>
+                        <button id="{{ product.id }}" class="btn atc btn-warning">Add to cart</button>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    
+    <div class="row">
+      <div class="col-md-3 offset-md-4">
+          <ul class="pagination">
+              {% if product_objects.has_previous %}
+                  <li class="page-item">
+                      <a class="page-link" href="?page={{product_objects.previous_page_number}}">Previous</a>
+                  </li>
+              {% endif %}
+
+
+              <li class="page-item active">
+                  <a class="page-link" href="?page={{product_objects.number}}">Current</a>
+              </li>
+
+              {% if product_objects.has_next %}
+              <li class="page-item">
+                  <a class="page-link" href="?page={{product_objects.next_page_number}}">Next</a>
+              </li>
+              {% endif %}
+          </ul>
+      </div>
+  </div>
+  <!-- <script src="{% static 'shop/cart.js' %}"></script> -->
+
+{% endblock %}
+          
+          
+<!-- {% block scripts %}         -->
+
+
+  
+<!-- <script type="text/javascript"> -->
+    
+ 
+ 
+<!-- </script> -->
+
+<!-- {% endblock %} -->

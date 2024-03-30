@@ -26,7 +26,6 @@ class Order(models.Model):
     zipcode = models.CharField(max_length=200)
     total = models.CharField(max_length=200)
 
-class CustomUser(User):
-    pass
+
     
 
