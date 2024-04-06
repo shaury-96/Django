@@ -25,6 +25,7 @@ body {
   letter-spacing: 0.1px;
   line-height: 1.8;
   color: #051922;
+  background-color: #07212e;
   overflow-x: hidden;
 }
 
@@ -54,7 +55,7 @@ h6, .h6 {
   font-family: "Poppins", sans-serif;
   font-weight: 700;
   margin: 0 0 1.25rem 0;
-  color: #051922;
+  color: #F28123;
 }
 
 h1:last-child, .h1:last-child,
@@ -728,7 +729,6 @@ nav.main-menu li a {
 }
 
 .top-header-area {
-  background-color: #051922;
   -webkit-transition: 0.3s;
   -o-transition: 0.3s;
   transition: 0.3s;

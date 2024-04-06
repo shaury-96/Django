@@ -32,7 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'userauths',
+    'userauth',
     'jazzmin',
     'shop',
     'django.contrib.admin',
@@ -140,4 +140,6 @@ JAZZMIN_SETTINGS={
     'site_header': "Anything at your doorstep",
 }
 
-AUTH_USER_MODEL= 'userauths.User'
+AUTH_USER_MODEL= 'userauth.CustomUser'
+
+

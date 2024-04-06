@@ -1,9 +1,8 @@
+
 .register-form{
     margin-top: 150px; /* Adjust as needed */
 }
 
-@media screen and (max-width: 768px) {
-    .register-form{
-        margin-top: 10%; /* Adjust as needed for smaller screens */
-    }
+.bd{
+    border-radius: 10rem;
 }
