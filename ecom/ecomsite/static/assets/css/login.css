@@ -1,0 +1,35 @@
+
+.login-container {
+    margin-top: 130px; /* Adjusted margin to accommodate for sticky header */
+    margin-bottom: 50px;
+    max-width: 400px;
+    padding: 40px;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.1);
+}
+.login-container h1 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+.form-group {
+    margin-bottom: 25px;
+}
+.form-control {
+    height: 50px;
+    border-radius: 25px;
+}
+.btn-login {
+    background-color: #007bff;
+    border: none;
+    border-radius: 25px;
+    height: 50px;
+    font-size: 18px;
+    font-weight: bold;
+}
+.btn-login:hover {
+    background-color: #0056b3;
+}
+.plogin{
+    padding-left: 100px;
+}

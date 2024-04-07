@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from userauth.forms import UserRegistrationForm
 from django.contrib.auth import login, authenticate
 from django.contrib import messages
-from django.views.decorators.csrf import csrf_protect,requires_csrf_token
+from userauth.models import CustomUser
 
 
 # Create your views here.
@@ -32,3 +32,30 @@ def register(request):
     
 
     return render(request,'userauth/register.html',context)
+
+
+def login_view(request):
+    
+    if request.user.is_authenticated:
+        return redirect("shop:index")
+    
+    if request.method == "POST":
+        email=request.POST.get("email")
+        password=request.POST.get("password")
+
+        try:
+            user=CustomUser.objects.get(email=email)
+        except:
+            messages.warning(request, f"user with {email} do not exist")
+
+        user=authenticate(request,email=email,password=password)
+
+        if user is not None:
+            login(request,user)
+            messages.success(request,"you are logged in")
+            return redirect("shop:index")
+        else:
+            messages.warning(request, "Wrong password")
+
+    return render(request,"userauth/login.html")
+        
