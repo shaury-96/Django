@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from userauth.forms import UserRegistrationForm
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate,logout
 from django.contrib import messages
 from userauth.models import CustomUser
 
@@ -59,3 +59,6 @@ def login_view(request):
 
     return render(request,"userauth/login.html")
         
+def logout_view(request):
+    logout(request)
+    return redirect("userauth:login")
