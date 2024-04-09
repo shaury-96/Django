@@ -134,7 +134,30 @@
 				</div>
 			</div>
 		</div>
+		{% if messages %}
+		{% for message in messages %}
+			{% if 'success' in message.tags %}
+			<div style="color: white; background-color: green; position:static;"  class="alert">
+				<strong>{{message}}</strong>
+			</div>
+			{% else %}
+			<div style="color: white; background-color: red; position:static;"  class="alert alert">
+				<strong>{{message}}</strong>
+			</div>
+			{% endif %}
+		{% endfor %}
+		{% endif %}
+		<script>
+				document.addEventListener('DOMContentLoaded', ()=>{
+					var alerts = document.querySelectorAll('.alert');
+					alerts.forEach((alert)=>{
+						setTimeout(()=>{ alert.style.display = 'none';}, 3000);
+					});
+				});
+
+		</script>
 	</div>
+	
 	<!-- end header -->
 	
 	{% block content  %}

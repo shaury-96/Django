@@ -45,17 +45,18 @@ def login_view(request):
 
         try:
             user=CustomUser.objects.get(email=email)
+            user=authenticate(request,email=email,password=password)
+
+            if user is not None:
+                login(request,user)
+                messages.success(request,"you are logged in")
+                return redirect("shop:index")
+            else:
+                messages.warning(request, "Wrong password")
         except:
             messages.warning(request, f"user with {email} do not exist")
 
-        user=authenticate(request,email=email,password=password)
-
-        if user is not None:
-            login(request,user)
-            messages.success(request,"you are logged in")
-            return redirect("shop:index")
-        else:
-            messages.warning(request, "Wrong password")
+       
 
     return render(request,"userauth/login.html")
         
