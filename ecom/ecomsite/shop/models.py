@@ -71,7 +71,7 @@ class Product(models.Model):
     user=models.ForeignKey(CustomUser,on_delete=models.SET_NULL,null=True)
     title=models.CharField(max_length=100,default='Product title')
     image=models.ImageField(upload_to=user_directory_path)
-    category=models.ForeignKey(Category,on_delete=models.SET_NULL,null=True)
+    category=models.ForeignKey(Category,on_delete=models.SET_NULL,null=True,related_name='product')
     vendor=models.ForeignKey(Vendor,on_delete=models.SET_NULL,null=True)
     description=models.TextField(null=True, blank=True)
     price=models.DecimalField(max_digits=99999,decimal_places=2,default="9.99")

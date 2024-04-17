@@ -2390,8 +2390,8 @@ ul.social-link-team li a {
   font-weight: 700;
   font-size: 18px;
   margin: 15px;
-  border: 2px solid #051922;
-  color: #323232;
+  border: 2px solid;
+  color: white;
   cursor: pointer;
   padding: 8px 20px;
   border-radius: 25px;

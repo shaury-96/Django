@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, authenticate
 
-from .models import Product
+from .models import Product, Category
 from django.core.paginator import Paginator
 
 # Create your views here.
@@ -23,7 +23,13 @@ def index(request):
 
 def product_list(request):
     product_objects=Product.objects.filter(product_status="published")
-    return render(request, 'shop/products.html',{'product_objects':product_objects})
+    category_objects=Category.objects.all()
+
+    context={
+        'product_objects':product_objects,
+        'category_objects':category_objects
+    }
+    return render(request, 'shop/products.html', context)
 
 def detail(request,id):
     product_object=Product.objects.get(id=id)
