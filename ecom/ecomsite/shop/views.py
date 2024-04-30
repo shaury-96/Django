@@ -4,6 +4,7 @@ from django.contrib.auth import login, authenticate
 
 from .models import Product, Category
 from django.core.paginator import Paginator
+from django.db.models.query import QuerySet
 
 # Create your views here.
 
@@ -21,15 +22,31 @@ def index(request):
 
     return render(request,'shop/index.html',{'product_objects':product_objects})
 
-def product_list(request):
-    product_objects=Product.objects.filter(product_status="published")
+def product_list(request,cid):
+
     category_objects=Category.objects.all()
+    product_objects=Product.objects.filter(product_status="published")
+    selected_category = None
+
+    if cid!="all": 
+        category_objects=Category.objects.get(cid=cid)
+        # print(type(category_objects))
+        product_objects=Product.objects.filter(product_status="published",category=category_objects)
+        category_objects=Category.objects.all()
+        # category_objects=[].append(category_objects)
+        # queryset = QuerySet(model=None)
+        # category_objects=Category.objects.filter(cid=cid)
+    
+    # print(type(product_objects), category_objects)
 
     context={
         'product_objects':product_objects,
-        'category_objects':category_objects
+        'category_objects':category_objects,
+        'selected_category':cid
     }
     return render(request, 'shop/products.html', context)
+
+
 
 def detail(request,id):
     product_object=Product.objects.get(id=id)

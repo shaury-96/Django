@@ -12,12 +12,20 @@
             <div class="col-md-12">
                 <div class="product-filters">
                     <ul>
-                        <!-- <li class="active" data-filter="*">All</li> -->
+                        <a href="{% url 'shop:product_list' 'all' %}">
+                                
+                            <li class="{% if selected_category == 'all' %} active {% endif %}">                                 
+                                    All
+                            </li>
+                        </a>
                         {% for cat in category_objects %}
-                        <li class="active">{{cat.title}} ( {{cat.product.count}} )</li>
+                            <a href="{% url 'shop:product_list' cat.cid %}">
+                                
+                                <li class="{% if cat.cid == selected_category  %} active {% endif %}">                                 
+                                        {{cat.title}} ( {{cat.product.count}} )
+                                </li>
+                            </a>
                         {% endfor %}
-                        <li data-filter=".berry">Berry</li>
-                        <li data-filter=".lemon">Lemon</li>
                     </ul>
                 </div>
             </div>
