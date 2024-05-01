@@ -255,5 +255,26 @@
 	<!-- main js -->
 	<script src="{% static 'assets/js/main.js' %}"></script>
 
+	<script>
+		function toggleWishlist() {
+		console.log("in");
+		var heartIcon = document.getElementById('heartIcon');
+		heartIcon.classList.toggle('active');
+		}
+
+		function showContent(contentType) {
+			// Hide all content elements
+			var contents = document.querySelectorAll('.content');
+			contents.forEach(function(content) {
+				content.style.display = 'none';
+			});
+			
+			// Show selected content
+			var selectedContent = document.getElementById(contentType + 'Content');
+			selectedContent.style.display = 'block';
+		}
+
+	</script>
+
 </body>
 </html>

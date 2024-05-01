@@ -1,0 +1,186 @@
+{% extends 'layout/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+
+
+<!-- breadcrumb-section -->
+<!-- <div class="breadcrumb-section breadcrumb-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 text-center">
+                <div class="breadcrumb-text">
+                    <p>See more Details</p>
+                    <h1>Single Product</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+<!-- end breadcrumb section -->
+
+<!-- single product -->
+<div class="single-product mt-150 mb-150">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5">
+               
+
+                <div class="single-product-img position-relative">
+                    <div id="productCarousel" class="carousel slide" data-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src="{{ product_object.image.url }}" class="d-block w-100" alt="">
+                            </div>
+                            {% for primage in prImages %}
+                            <div class="carousel-item">
+                                <img src="{{ primage.images.url }}" class="d-block w-100" alt="">
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#productCarousel" role="button" data-slide="prev">
+                        <span class="carousel-control-icon" aria-hidden="true">&lt;</span>
+                    </a>
+                    <a class="carousel-control-next" href="#productCarousel" role="button" data-slide="next">
+                        <span class="carousel-control-icon" aria-hidden="true">&gt;</span>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="single-product-content">
+                    <h3>{{product_object.title}}</h3>
+                    <p class="single-product-pricing">
+                        <!-- <span>Per Kg</span>  -->
+                        {{product_object.price}}</p>
+                    <p>{{product_object.description}} product description...</p>
+                    <div class="single-product-form">
+                        <form action="index.html">
+                            <input type="number" placeholder="0">
+                        </form>
+                        <a href="cart.html" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
+
+                        <!-- <button id="wishlistButton" onclick="toggleWishlist()"> -->
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart" id="heartIcon" onclick="toggleWishlist()">
+                              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                            </svg>
+                          <!-- </button> -->
+
+                        <p><strong>Categories: </strong>{{product_object.category}}</p>
+                        <!-- <p><strong>Seller: </strong>{{product_object.vendor}}</p> -->
+                    </div>
+                    <h4>Share:</h4>
+                    <ul class="product-share">
+                        <li><a href=""><i class="fab fa-facebook-f"></i></a></li>
+                        <li><a href=""><i class="fab fa-twitter"></i></a></li>
+                        <li><a href=""><i class="fab fa-google-plus-g"></i></a></li>
+                        <li><a href=""><i class="fab fa-linkedin"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="detail-section">
+            <div class="options">
+              <button class="option" onclick="showContent('info')">Info</button>
+              <button class="option" onclick="showContent('seller')">Seller</button>
+              <button class="option" onclick="showContent('reviews')">Reviews</button>
+            </div>
+            <div class="content" id="infoContent">
+              <!-- Info content goes here -->
+              {{product_object.specs}}
+              <p></p>
+            </div>
+            <div class="content" id="sellerContent" style="display: none;">
+              <!-- Seller content goes here -->
+              {{product_object.vendor}}<br>
+              {{product_object.vendor.address}}
+            </div>
+            <div class="content" id="reviewsContent">
+              <!-- Reviews content goes here -->
+              Reviews content goes here...
+            </div>
+          </div>
+    </div>
+</div>
+
+<!-- end single product -->
+
+<!-- more products -->
+<div class="more-products mb-150">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 text-center">
+                <div class="section-title">	
+                    <h3><span class="orange-text">Related</span> Products</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, fuga quas itaque eveniet beatae optio.</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-md-6 text-center">
+                <div class="single-product-item">
+                    <div class="product-image">
+                        <a href="single-product.html"><img src="assets/img/products/product-img-1.jpg" alt=""></a>
+                    </div>
+                    <h3>Strawberry</h3>
+                    <p class="product-price"><span>Per Kg</span> 85$ </p>
+                    <a href="cart.html" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 text-center">
+                <div class="single-product-item">
+                    <div class="product-image">
+                        <a href="single-product.html"><img src="assets/img/products/product-img-2.jpg" alt=""></a>
+                    </div>
+                    <h3>Berry</h3>
+                    <p class="product-price"><span>Per Kg</span> 70$ </p>
+                    <a href="cart.html" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 offset-lg-0 offset-md-3 text-center">
+                <div class="single-product-item">
+                    <div class="product-image">
+                        <a href="single-product.html"><img src="assets/img/products/product-img-3.jpg" alt=""></a>
+                    </div>
+                    <h3>Lemon</h3>
+                    <p class="product-price"><span>Per Kg</span> 35$ </p>
+                    <a href="cart.html" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end more products -->
+
+<!-- logo carousel -->
+<div class="logo-carousel-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="logo-carousel-inner">
+                    <div class="single-logo-item">
+                        <img src="assets/img/company-logos/1.png" alt="">
+                    </div>
+                    <div class="single-logo-item">
+                        <img src="assets/img/company-logos/2.png" alt="">
+                    </div>
+                    <div class="single-logo-item">
+                        <img src="assets/img/company-logos/3.png" alt="">
+                    </div>
+                    <div class="single-logo-item">
+                        <img src="assets/img/company-logos/4.png" alt="">
+                    </div>
+                    <div class="single-logo-item">
+                        <img src="assets/img/company-logos/5.png" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+

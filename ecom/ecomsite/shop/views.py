@@ -48,9 +48,15 @@ def product_list(request,cid):
 
 
 
-def detail(request,id):
-    product_object=Product.objects.get(id=id)
-    return render(request,'shop/detail.html',{'product_object':product_object})
+def product_detail(request,pid):
+    product_object=Product.objects.get(pid=pid)
+    prImages=product_object.prImages.all()
+
+    context={
+        'product_object':product_object,
+        'prImages':prImages
+    }
+    return render(request,'shop/product_detail.html',context)
 
 # def checkout(request):
  

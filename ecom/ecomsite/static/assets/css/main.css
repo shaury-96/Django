@@ -2470,10 +2470,21 @@ p.single-product-pricing span {
   margin-bottom: 10px;
   font-weight: 400;
 }
-
+#heartIcon {
+  margin-left: 15px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+#heartIcon.active {
+  /* background-color: orange; orange background color when active */
+  /* color: #ffffff; white text color when active */
+  stroke: #F28123;
+  fill: #F28123;
+}
 .single-product-content p {
   font-size: 15px;
-  color: #555;
+  color: white;
   line-height: 1.8;
 }
 
@@ -2481,7 +2492,7 @@ p.single-product-pricing span {
   font-size: 32px;
   font-weight: 700;
   margin-bottom: 10px;
-  color: #051922;
+  color: white;
   line-height: inherit;
 }
 
@@ -2758,4 +2769,36 @@ table.order-details tbody td {
   display: table-cell;
   vertical-align: middle;
   width: 100%;
+}
+.detail-section {
+  margin-top: 20px;
+}
+
+.options {
+  display: flex;
+}
+
+.option {
+  font-family: 'Poppins', sans-serif;
+  display: inline-block;
+  background-color: #F28123;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 50px;
+  margin-left: 10px;
+  
+}
+
+.option:hover {
+  background-color: #051922;
+  border: none;
+}
+.option:focus {
+  outline: none;
+}
+.content {
+  margin-left: 10px;
+  margin-top: 20px;
+  color: white;
 }
