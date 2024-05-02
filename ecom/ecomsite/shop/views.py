@@ -51,10 +51,12 @@ def product_list(request,cid):
 def product_detail(request,pid):
     product_object=Product.objects.get(pid=pid)
     prImages=product_object.prImages.all()
+    rProducts=Product.objects.filter(category=product_object.category, product_status="published").exclude(pid=product_object.pid)[:3]
 
     context={
         'product_object':product_object,
-        'prImages':prImages
+        'prImages':prImages,
+        'rProducts':rProducts
     }
     return render(request,'shop/product_detail.html',context)
 
