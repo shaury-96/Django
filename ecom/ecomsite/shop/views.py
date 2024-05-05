@@ -1,10 +1,13 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
+from taggit.models import Tag
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, authenticate
 
 from .models import Product, Category
 from django.core.paginator import Paginator
-from django.db.models.query import QuerySet
+# from django.db.models.query import QuerySets
+
+
 
 # Create your views here.
 
@@ -59,6 +62,21 @@ def product_detail(request,pid):
         'rProducts':rProducts
     }
     return render(request,'shop/product_detail.html',context)
+
+
+def tag_list(request,tag_slug=None):
+    products=Product.objects.filter(product_status="published")
+    tag=None
+    if tag_slug:
+        tag=get_object_or_404(Tag, slug=tag_slug)
+        products=products.filter(tags__in=[tag])
+    
+    context={
+        'products':products,
+        'tag':tag
+    }
+    return render(request,'shop/tag_page.html',context)
+
 
 # def checkout(request):
  

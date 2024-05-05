@@ -69,7 +69,7 @@
                           <!-- </button> -->
 
                         <p><strong>Categories: </strong>{{product_object.category}}</p>
-                        <!-- <p><strong>Seller: </strong>{{product_object.vendor}}</p> -->
+                        <p><strong>Tags: </strong>{% for tag in product_object.tags.all %}<a href="{% url 'shop:tag_list' tag.slug %}">#{{tag.name}} </a>{% endfor %}</p>
                     </div>
                     <h4>Share:</h4>
                     <ul class="product-share">
@@ -89,15 +89,15 @@
             </div>
             <div class="content" id="infoContent">
               <!-- Info content goes here -->
-              {{product_object.specs}}
-              <p></p>
+              {{product_object.specs|safe}}
+              
             </div>
             <div class="content" id="sellerContent" style="display: none;">
               <!-- Seller content goes here -->
               {{product_object.vendor}}<br>
               {{product_object.vendor.address}}
             </div>
-            <div class="content" id="reviewsContent">
+            <div class="content" id="reviewsContent" style="display: none;">
               <!-- Reviews content goes here -->
               Reviews content goes here...
             </div>

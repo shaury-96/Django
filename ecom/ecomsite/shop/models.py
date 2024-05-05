@@ -3,6 +3,7 @@ from userauth.models import CustomUser
 from shortuuid.django_fields import ShortUUIDField
 from django.utils.html import mark_safe
 from taggit.managers import TaggableManager
+from ckeditor_uploader.fields import RichTextUploadingField
 
 
 STATUS_CHOICES=(
@@ -45,14 +46,14 @@ class Category(models.Model):
     def __str__(self):
         return self.title
 
-class Tags(models.Model):
-    pass
+# class Tags(models.Model):
+#     pass
 
 class Vendor(models.Model):
     vid= ShortUUIDField(unique=True, length=10,max_length=20,prefix="VEN",alphabet="abcd12345")
     title=models.CharField(max_length=100)
     image=models.ImageField(upload_to=user_directory_path)
-    description=models.TextField(null=True, blank=True)
+    description=RichTextUploadingField(null=True, blank=True)
     address=models.CharField(max_length=100, default="some address")
     contact=models.CharField(max_length=12,default="42432")
     vendor_rating=models.CharField(default="10",max_length=10)
@@ -74,9 +75,9 @@ class Product(models.Model):
     image=models.ImageField(upload_to=user_directory_path)
     category=models.ForeignKey(Category,on_delete=models.SET_NULL,null=True,related_name='product')
     vendor=models.ForeignKey(Vendor,on_delete=models.SET_NULL,null=True)
-    description=models.TextField(null=True, blank=True)
+    description=RichTextUploadingField(null=True, blank=True)
     price=models.DecimalField(max_digits=99999,decimal_places=2,default="9.99")
-    specs=models.TextField(null=True, blank=True)
+    specs=RichTextUploadingField(null=True, blank=True)
     # tags=models.ForeignKey(Tags,on_delete=models.SET_NULL,null=True)
     tags=TaggableManager(blank=True)
     product_status=models.CharField(choices=STATUS,max_length=20,default="in_review")

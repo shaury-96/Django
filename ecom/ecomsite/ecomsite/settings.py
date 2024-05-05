@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'jazzmin',
     'shop',
     'taggit',
+    'ckeditor',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -144,4 +145,16 @@ JAZZMIN_SETTINGS={
 
 AUTH_USER_MODEL= 'userauth.CustomUser'
 
+CKEDITOR_UPLOAD_PATH= 'uploads/'
+
+CKEDITOR_CONFIGS={
+    'default':{
+        'toolbar':'all',
+        'extraPlugins':','.join(
+            [
+                'widget','dialog'
+            ]
+        ),
+    }
+}
 
