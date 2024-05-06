@@ -99,7 +99,48 @@
             </div>
             <div class="content" id="reviewsContent" style="display: none;">
               <!-- Reviews content goes here -->
-              Reviews content goes here...
+
+              <div class="review-summary">
+                <h3>Customer Reviews</h3>
+                <div class="average-rating">
+                    <span>{{ avg_rating.rating|floatformat:1 }} out of 5.0</span>
+                </div>
+                <div class="rating-distribution">
+                    {% for rating in rating_distribution %}
+                    <div class="rating-bar">
+                        <span>{{ rating.rating }} star</span>
+                        <div class="bar-container">
+                            <div class="bar" style="width: 5px";></div>
+                        </div>
+                        <span>{{ rating.count }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+
+              <div class="review-section">
+                {% for review in reviews %}
+                <div class="review">
+                    <div class="review-header">
+                        <div class="user-icon">
+                            <img src="{% static 'assets/img/user.png' %}" alt="User Icon">
+                        </div>
+                        <div class="review-info">
+                            <div class="review-date">{{ review.date|date:"d M, Y" }} {{review.rating}}</div>
+                            <div class="review-rating">
+                               
+                            </div>
+                        </div>
+                    </div>
+                    <div class="review-body">
+                        {{ review.review }}
+                    </div>
+                </div>
+                {% empty %}
+                <p>No reviews yet.</p>
+                {% endfor %}
+            </div>
             </div>
           </div>
     </div>

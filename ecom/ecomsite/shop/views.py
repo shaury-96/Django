@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from taggit.models import Tag
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, authenticate
-
-from .models import Product, Category
+from django.db.models import Avg
+from .models import Product, Category, ProductReview
 from django.core.paginator import Paginator
 # from django.db.models.query import QuerySets
 
@@ -55,11 +55,15 @@ def product_detail(request,pid):
     product_object=Product.objects.get(pid=pid)
     prImages=product_object.prImages.all()
     rProducts=Product.objects.filter(category=product_object.category, product_status="published").exclude(pid=product_object.pid)[:3]
+    reviews=ProductReview.objects.filter(product=product_object).order_by('-date')
+    avg_rating=reviews.aggregate(rating=Avg('rating'))
 
     context={
         'product_object':product_object,
         'prImages':prImages,
-        'rProducts':rProducts
+        'rProducts':rProducts,
+        'reviews':reviews,
+        'avg_rating':avg_rating
     }
     return render(request,'shop/product_detail.html',context)
 
