@@ -5,6 +5,8 @@ from django.contrib.auth import login, authenticate
 from django.db.models import Avg
 from .models import Product, Category, ProductReview
 from django.core.paginator import Paginator
+from django import template
+from .forms import ProductReviewForm
 # from django.db.models.query import QuerySets
 
 
@@ -57,15 +59,20 @@ def product_detail(request,pid):
     rProducts=Product.objects.filter(category=product_object.category, product_status="published").exclude(pid=product_object.pid)[:3]
     reviews=ProductReview.objects.filter(product=product_object).order_by('-date')
     avg_rating=reviews.aggregate(rating=Avg('rating'))
+    review_form=ProductReviewForm()
 
     context={
         'product_object':product_object,
         'prImages':prImages,
         'rProducts':rProducts,
         'reviews':reviews,
-        'avg_rating':avg_rating
+        'avg_rating':avg_rating,
+        'review_form':review_form
     }
     return render(request,'shop/product_detail.html',context)
+
+
+
 
 
 def tag_list(request,tag_slug=None):
@@ -80,6 +87,14 @@ def tag_list(request,tag_slug=None):
         'tag':tag
     }
     return render(request,'shop/tag_page.html',context)
+
+
+def ajax_add_review(request, pid):
+    product=Product.objects.get(pid=pid)
+    user=request.user
+
+
+    
 
 
 # def checkout(request):
@@ -122,3 +137,4 @@ def user_login(request):
     else:
         form = AuthenticationForm()
     return render(request,'shop/register.html')
+

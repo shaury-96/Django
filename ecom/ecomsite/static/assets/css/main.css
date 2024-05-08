@@ -2804,7 +2804,6 @@ table.order-details tbody td {
 }
 .review-section {
   margin-top: 20px;
-  background-color: #f9f9f9;
   padding: 20px;
   border-radius: 5px;
 }
@@ -2832,7 +2831,7 @@ table.order-details tbody td {
 
 .review-info .review-date {
   font-size: 12px;
-  color: #666;
+ 
 }
 
 .review-rating .fa {
@@ -2846,7 +2845,7 @@ table.order-details tbody td {
 .review-body {
   margin-top: 10px;
   font-size: 14px;
-  color: #333;
+ 
 }
 .rating-distribution .rating-bar {
   display: flex;
@@ -2857,7 +2856,6 @@ table.order-details tbody td {
 .rating-distribution .bar-container {
   flex-grow: 1;
   height: 10px;
-  background-color: #ddd;
   margin: 0 10px;
   position: relative;
 }
@@ -2869,7 +2867,6 @@ table.order-details tbody td {
 }
 
 .review-summary {
-  background-color: #f9f9f9;
   padding: 20px;
   border-radius: 5px;
   margin-bottom: 20px;
