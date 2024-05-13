@@ -133,11 +133,15 @@ class CartOrderItems(models.Model):
         return mark_safe('<img src="/media/%s" witdth="50" height="50"/>' %(self.image))
 
 class ProductReview(models.Model):
+    
+    rid=ShortUUIDField(unique=True,length=10, max_length=20, prefix="REV",alphabet="abcd12345")
     user=models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True)
     product=models.ForeignKey(Product, on_delete=models.SET_NULL, null=True,related_name='product_review')
     review=models.TextField()
-    rating=models.IntegerField(choices=RATING, default=None)
+    rating=models.IntegerField(choices=RATING, default=None, null=True, blank=True)
     date=models.DateTimeField(auto_now_add=True)
+    parent_review_id=models.CharField(max_length=20, null=True, default=None)
+    
 
     class Meta:
         verbose_name_plural="Product Reviews"

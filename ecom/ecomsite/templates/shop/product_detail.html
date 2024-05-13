@@ -56,7 +56,7 @@
                     <p class="single-product-pricing">
                         <!-- <span>Per Kg</span>  -->
                         {{product_object.price}}</p>
-                    <p>{{product_object.description}} product description...</p>
+                    <p>{{product_object.description|safe}} product description...</p>
                     <div class="single-product-form">
                         <form action="index.html">
                             <input type="number" placeholder="0">
@@ -104,7 +104,7 @@
               <div class="review-summary">
                 <!-- <h3>Customer Reviews</h3> -->
                 <div class="average-rating">
-                    <span>{{ avg_rating.rating|floatformat:1 }} out of 5.0</span>
+                    <span id="avgrate">{{ avg_rating.rating|floatformat:1 }} out of 5.0</span>
                 </div>
                 <!-- <div class="rating-distribution">
                     
@@ -120,7 +120,15 @@
                             <img src="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png" alt="User Icon">
                         </div>
                         <div class="review-info">
-                            <div class="review-date"><strong>{{review.user.username}}</strong> {{ review.date|date:"d M, Y" }} {{review.rating}}</div>
+
+                            <div class="review-date"><strong>{{review.user.username}}</strong> {{ review.date|date:"d M, Y" }}    
+                                {% if review.rating %} 
+                                    {% for star in review.rating|ljust:review.rating %}
+                                    <i class="fas fa-star text-warning"></i>
+                                    {% endfor %}
+                                {% endif %}
+                               
+                            </div>
                             <div class="review-rating">
                                
                             </div>
@@ -129,16 +137,36 @@
                     <div class="review-body">
                         {{ review.review }}
                     </div>
+                    
+                    <button id='preply' class="reply-btn">Reply</button>
+                    <div class="reply-form" style="display: none;">
+                        <input type="hidden" id="csrf_token" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                        <input type="text" class="reply-text" placeholder="Enter your reply">
+                        <button reviewId="{{ review.rid }}" pid="{{review.product.pid}}" class="post-btn">Post</button>
+                    </div>
+
                 </div>
                 {% empty %}
-                <p>No reviews yet.</p>
+                <p id="no-review">No reviews yet.</p>
                 {% endfor %}
                 
-                <form action="#" method="post">
+                <strong id="review-response" class="text-success"></strong>
+
+
+                {% if user.is_authenticated %}
+                
+                <div class="rev-form">
+                     
+                <form action="{% url 'shop:ajax_add_review' product_object.id %}" method="post" id="reviewForm" style="padding: 20px; ">
                     {% csrf_token %}
-                    {{ review_form }}
-                    <input type="submit" value="Add Review">
+                    <h3>Post a Review</h3>
+                    {{ review_form.as_p}}
+                    <input type="submit" value="Post Review">
                 </form>
+                </div>
+                {% else %}
+                <p>Please login to post a review</p>
+                {% endif %}
                 
             </div>
             </div>

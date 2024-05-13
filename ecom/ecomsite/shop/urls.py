@@ -8,7 +8,8 @@ urlpatterns=[
     path('',views.index,name='index'),
     path('products/<cid>/',views.product_list,name='product_list'),
     path('product/<pid>/',views.product_detail,name='product_detail'),
-    path('products/tag/<tag_slug>/',views.tag_list,name='tag_list')
-
+    path('products/tag/<tag_slug>/',views.tag_list,name='tag_list'),
+    path('ajax_add_review/<pid>/',views.ajax_add_review,name='ajax_add_review'),
+    path('product/<pid>/reply/',views.reply_view,name='reply_view')
 ]
 

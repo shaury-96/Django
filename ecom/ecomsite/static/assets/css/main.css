@@ -2871,3 +2871,33 @@ table.order-details tbody td {
   border-radius: 5px;
   margin-bottom: 20px;
 }
+textarea#id_review{
+  height: 80px;
+  margin-bottom: 20px;
+  display: block;
+  width: 50%;
+}
+select#id_rating{
+  margin-top: 20px;
+}
+input[type="submit"] {
+  font-size: 12px;
+  padding: 9px 9px;
+}
+.rev-form{
+  border: solid 1px grey;
+  margin-top: 20px;
+}
+.reply-btn {
+  color: #3cb371; /* Parrot green color */
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+  margin-top: 10px;
+  display: inline-block;
+  background: #07212e;
+  border: none;
+}
+.reply-btn:hover{
+  color:#F28123;
+}
