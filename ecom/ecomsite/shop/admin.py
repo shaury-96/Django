@@ -10,6 +10,10 @@ class ProductAdmin(admin.ModelAdmin):
     inlines=[ProductImagesAdmin]
     list_display=['user','title','product_image']
 
+class ProductReviewAdmin(admin.ModelAdmin):
+    model=ProductReview
+    list_display=['rid','user', 'product', 'review', 'parent_review_id']
+
 
 admin.site.register(Product,ProductAdmin)
 admin.site.register(Category)
@@ -17,6 +21,6 @@ admin.site.register(CartOrder)
 admin.site.register(Vendor)
 admin.site.register(CartOrderItems)
 
-admin.site.register(ProductReview)
+admin.site.register(ProductReview, ProductReviewAdmin)
 admin.site.register(Wishlist)
 admin.site.register(Address)

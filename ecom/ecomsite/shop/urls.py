@@ -10,6 +10,7 @@ urlpatterns=[
     path('product/<pid>/',views.product_detail,name='product_detail'),
     path('products/tag/<tag_slug>/',views.tag_list,name='tag_list'),
     path('ajax_add_review/<pid>/',views.ajax_add_review,name='ajax_add_review'),
-    path('product/<pid>/reply/',views.reply_view,name='reply_view')
+    path('product/<pid>/reply/',views.reply_view,name='reply_view'),
+    path('product/<pid>/reply_tree/',views.reply_tree,name='reply_tree')
 ]
 

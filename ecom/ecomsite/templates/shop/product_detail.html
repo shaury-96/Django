@@ -114,7 +114,11 @@
 
               <div class="review-section">
                 {% for review in reviews %}
-                <div class="review">
+                <!-- {% if review.parent_review_id %}
+                    
+                {% else %} -->
+                <!-- {{review.user.first_name}} -->
+                <div class="review" id="{{ review.rid }}" review-user="sds">
                     <div class="review-header">
                         <div class="user-icon">
                             <img src="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png" alt="User Icon">
@@ -136,20 +140,165 @@
                     </div>
                     <div class="review-body">
                         {{ review.review }}
+                        <div class="replies" id="replies-{{ review.rid }}" style="padding-left:20px ; padding-top: 10px;">
+                            
+                        </div>
+
                     </div>
                     
                     <button id='preply' class="reply-btn">Reply</button>
                     <div class="reply-form" style="display: none;">
                         <input type="hidden" id="csrf_token" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
                         <input type="text" class="reply-text" placeholder="Enter your reply">
-                        <button reviewId="{{ review.rid }}" pid="{{review.product.pid}}" class="post-btn">Post</button>
+                        <button reviewId="{{ review.rid }}" pid="{{review.product.pid}}" class="post-btn" id="postreviewid">Post</button>
                     </div>
 
                 </div>
+
+               
+
+
+                
+                <!-- {% endif %} -->
                 {% empty %}
                 <p id="no-review">No reviews yet.</p>
                 {% endfor %}
                 
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const reviewElements = document.querySelectorAll('.review');
+
+                        reviewElements.forEach(reviewElement => {
+                        
+                        const reviewId = reviewElement.id
+                
+                        console.log(reviewId);
+                        fetchReplies(reviewId);  
+                    });
+                });
+
+                function fetchReplies(reviewId) {
+                    fetch('reply_tree/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': '{{ csrf_token }}'
+                        },
+                        body: JSON.stringify({ reviewId:reviewId })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                    if (data.error) {
+                        console.error(`Error fetching replies for review ID ${reviewId}: ${data.error}`);
+                    } else {
+                        console.log(data.data)
+                        const repliesContainer = document.getElementById(`replies-${reviewId}`);
+                        const replies = data.data;
+                        renderReplies(replies, repliesContainer);
+                    }
+                })
+                    .catch(error => {
+                        console.error(`Error fetching replies for review ID ${reviewId}:`, error);
+                    });
+                }
+                
+
+                function renderReplies(replies, container) {
+                    replies.forEach(reply => {
+
+                        const replyElement = document.createElement('div');
+
+                        replyElement.classList.add('reply');
+
+                        const replyText = document.createElement('p');
+                        replyText.innerHTML = `
+                            <span style="color:#3cb371; padding-right: 7px;">@${reply.parent_user}</span>
+                            <strong>${reply.user}:</strong> ${reply.review}
+                        `;
+                        replyElement.appendChild(replyText);
+
+                        const replyButton = document.createElement('button');
+                        replyButton.classList.add('reply-btn');
+                        replyButton.dataset.replyId = reply.id;
+                        replyButton.textContent = 'Reply';
+
+                        replyElement.appendChild(replyButton);
+
+                        const replyForm = document.createElement('div');
+                        replyForm.classList.add('reply-form');
+                        replyForm.style.display = 'none';
+
+                        const csrfInput = document.createElement('input');
+                        csrfInput.type = 'hidden';
+                        csrfInput.name = 'csrfmiddlewaretoken';
+                        csrfInput.value = '{{ csrf_token }}';  
+                        replyForm.appendChild(csrfInput);
+
+                        const replyInput = document.createElement('input');
+                        replyInput.type = 'text';
+                        replyInput.classList.add('reply-text');
+                        replyInput.placeholder = 'Enter your reply';
+                        replyForm.appendChild(replyInput);
+
+                        const postButton = document.createElement('button');
+                        postButton.classList.add('post-btn');
+                        postButton.dataset.reviewId = reply.id;
+                        postButton.dataset.productId = reply.product_id;
+                        postButton.textContent = 'Post';
+
+                        replyForm.appendChild(postButton);                                                                                                      
+
+                        replyButton.addEventListener('click', function(event) {
+                                
+                            event.preventDefault(); 
+
+                            const replyForm = event.target.nextElementSibling;
+                            replyForm.style.display = replyForm.style.display === 'none' ? 'block' : 'none';               
+                                            
+                                            
+                        });
+
+                        
+
+                        
+
+                        replyElement.appendChild(replyForm);
+                     
+                        container.appendChild(replyElement);
+                            
+                        // Recursively render the nested replies
+                        // if (Array.isArray(reply.replies) && reply.replies.length > 0) {
+                        //     renderReplies(reply.replies, replyElement);
+                        // }
+                    });
+                }                                                                                                                                                   
+              
+
+                //         const element = document.getElementById('postreviewid');
+                //     const reviewId = element.getAttribute('reviewId');
+                //     console.log(reviewId);
+                //     fetch('reply_tree/', {
+                //         method: 'POST',
+                //         headers: {
+                //             'Content-Type': 'application/json',
+                //             'X-CSRFToken': '{{ csrf_token }}'
+                //         },
+                //         body: JSON.stringify({ reviewId:reviewId })
+                //     })
+                //     .then(response => response.json())
+                //     .then(data => {
+                        
+                //         console.log(data);
+                //     })
+                //     .catch(error => {
+                //         console.error('Error:', error);
+                //     });
+                // });});
+
+                </script>
+
+
+
                 <strong id="review-response" class="text-success"></strong>
 
 

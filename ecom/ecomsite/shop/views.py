@@ -151,6 +151,51 @@ def reply_view(request,pid):
     else:
         return JsonResponse({'error': 'Invalid request method.'}, status=400)
     
+def help_reply_tree(rid,nodes,visited):
+
+    if rid in visited:
+        return
+    visited.add(rid)
+
+    replies=ProductReview.objects.filter(parent_review_id=rid)
+    parent_user=ProductReview.objects.filter(rid=rid).first().user.first_name
+    # print("this is new",parent_user)
+    for r in replies:
+        node=({
+            'id': r.rid,
+            'user': r.user.first_name,
+            'review': r.review,
+            'parent_review_id':rid,
+            'parent_user':parent_user
+            
+        })
+        nodes.append(node)
+        help_reply_tree(r.rid,nodes,visited)
+
+    return nodes
+
+
+def reply_tree(request,pid):
+
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            rid = data.get('reviewId')
+            # reviewUser = data.get('reviewUser')
+            # rid = request.POST.get('reviewId')
+            print(rid)
+            if rid:
+                visited=set()
+                res = help_reply_tree(rid, [],visited)
+                print("here it is", res)
+                return JsonResponse({'data': res})
+            else:
+                return JsonResponse({'error': 'Review ID not provided'}, status=400)
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)
+    else:
+        return JsonResponse({'error': 'Invalid request method'}, status=405)
+
 
 
 # def checkout(request):
