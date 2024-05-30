@@ -94,7 +94,7 @@ class Product(models.Model):
         verbose_name_plural="Products"
     
     def product_image(self):
-        return mark_safe('<img src="%s" witdth="50" height="50"/>' %(self.image.url))
+        return mark_safe('<img src="%s" witdth="250" height="300"/>' %(self.image))
     
     def __str__(self):
         return self.title

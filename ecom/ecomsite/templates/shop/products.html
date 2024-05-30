@@ -36,9 +36,11 @@
             <div class="col-lg-4 col-md-6 text-center strawberry">
                 <div class="single-product-item">
                     <div class="product-image">
-                        <a href="{% url 'shop:product_detail' product.pid %}"><img src="{{ product.image.url }}" alt=""></a>
+                        
+                        <!-- <a href="{% url 'shop:product_detail' product.pid %}"><img src="{{product.product_image}}" alt=""></a> -->
+                        <a href="{% url 'shop:product_detail' product.pid %}">{{product.product_image}}</a>
                     </div>
-                    <h3>{{product.title}}</h3>
+                    <h3>{{product.title|slice:":30"}}...</h3>
                     <p class="product-price"><span>{{ product.vendor }}</span> {{product.price}} </p>
                     <a href="cart.html" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
                 </div>
