@@ -100,22 +100,43 @@
 								</li>
 								<li>
 									<div class="header-icons">
-										<a class="shopping-cart" href="cart.html"><i class="fas fa-shopping-cart"></i></a>
+										<a class="shopping-cart" href="cart.html"><i class="fas fa-shopping-cart"></i>
+											<span class="cart-count">{{request.session.cart_data_obj|length}}</span>
+											<div class="cart-items">
+												<ul class="sub-menu">
+													<li>Item 1</li>
+													<li>Item 2</li>
+													<li>Item 3</li>
+												</ul>
+											</div>
+										</a>
 										
 											
 										
-										<a class="mobile-hide search-bar-icon" href="#"><i class="fas fa-search"></i></a>
-										<i style="color: white;" class="fas fa-user">
-											<ul class="sub-menu">
+										<!-- <a class="mobile-hide search-bar-icon" href="#"><i class="fas fa-search"></i></a> -->
+										
+										
+											<a class="shopping-cart" href="cart.html"><i style="color: white;" class="fas fa-user"></i>
+												<span class="cart-count">{{request.session.cart_data_obj|length}}</span>
+												<div class="cart-items">
+													<ul class="sub-menu">
+														<li>Item 1</li>
+														<li>Item 2</li>
+														<li>Item 3</li>
+													</ul>
+												</div></a>
+											<!-- <div class="user-icon"> -->
+											<!-- <ul class="sub-menu">
 												{% if user.is_authenticated %}
 												<li style="color: #555; padding: 8px; font-size: 13px; font-weight: 600;">Hi! {{user.first_name}}</li>
 												<li><a href="{% url 'userauth:logout' %}">Logout</a></li>
 												{% else %}
-												<li><a href="{% url 'userauth:logout' %}">Login</a></li>
+												<li><a href="{% url 'userauth:login' %}">Login</a></li>
 												{% endif %}
 												
-											</ul>
-										</i>
+											</ul> -->
+											<!-- </div> -->
+										<!-- </i> -->
 									</div>
 								</li>
 								<!-- <div class="header-icons">
@@ -159,6 +180,26 @@
 	</div>
 	
 	<!-- end header -->
+	<!-- search area -->
+	<div class="search-area">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<span class="close-btn"><i class="fas fa-window-close"></i></span>
+					<div class="search-bar">
+						<div class="search-bar-tablecell">
+							<h3>Search For:</h3>
+							<form action="{% url 'shop:search' %}" method="GET">
+								<input name="query" type="text" placeholder="Keywords">
+							<button type="submit">Search <i class="fas fa-search"></i></button>
+							</form>
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 	
 	{% block content  %}
     {% endblock content %}
@@ -256,6 +297,8 @@
 	<script src="{% static 'assets/js/main.js' %}"></script>
 	<script src="{% static 'assets/js/review-add.js' %}"></script>
 	<script src="{% static 'assets/js/reply.js' %}"></script>
+	<script src="{% static 'assets/js/cart.js' %}"></script>
+
 
 	<script>
 		function toggleWishlist() {

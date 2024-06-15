@@ -58,15 +58,20 @@
                         {{product_object.price}}</p>
                     <p>{{product_object.description|safe}} product description...</p>
                     <div class="single-product-form">
-                        <form action="index.html">
-                            <input type="number" placeholder="0">
-                        </form>
-                        <a href="cart.html" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
+                        <!-- <form action="index.html"> -->
+                            <input type="number" value="0" placeholder="0" id="product-quantity"><br>
+                            <input type="hidden" value="{{product_object.id}}" class="product-id">
+                            <input type="hidden" value="{{product_object.title}}" class="product-title">
+                            <input type="hidden" value="{{product_object.price}}" class="product-price">
+                            <button type="submit" class="cart-btn" id="add-to-cart"><i class="fas fa-shopping-cart"></i>Add to Cart</button>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart" id="heartIcon" onclick="toggleWishlist()">
+                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                              </svg>
+                        <!-- </form> -->
+                        <!-- <a href="cart.html" class="cart-btn"> <i class="fas fa-shopping-cart"></i>Add to Cart</a> -->
 
                         <!-- <button id="wishlistButton" onclick="toggleWishlist()"> -->
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart" id="heartIcon" onclick="toggleWishlist()">
-                              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-                            </svg>
+                            
                           <!-- </button> -->
 
                         <p><strong>Categories: </strong>{{product_object.category}}</p>
@@ -295,34 +300,9 @@
                             
                         })
                             
-                        // Recursively render the nested replies
-                        // if (Array.isArray(reply.replies) && reply.replies.length > 0) {
-                        //     renderReplies(reply.replies, replyElement);
-                        // }
+                   
                     });
-                }                                                                                                                                                   
-              
-
-                //         const element = document.getElementById('postreviewid');
-                //     const reviewId = element.getAttribute('reviewId');
-                //     console.log(reviewId);
-                //     fetch('reply_tree/', {
-                //         method: 'POST',
-                //         headers: {
-                //             'Content-Type': 'application/json',
-                //             'X-CSRFToken': '{{ csrf_token }}'
-                //         },
-                //         body: JSON.stringify({ reviewId:reviewId })
-                //     })
-                //     .then(response => response.json())
-                //     .then(data => {
-                        
-                //         console.log(data);
-                //     })
-                //     .catch(error => {
-                //         console.error('Error:', error);
-                //     });
-                // });});
+                }                                                                                                                                                  
 
                 </script>
 

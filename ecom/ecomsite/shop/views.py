@@ -30,6 +30,7 @@ def index(request):
 
     return render(request,'shop/index.html',{'product_objects':product_objects})
 
+
 def product_list(request,cid):
 
     category_objects=Category.objects.all()
@@ -55,7 +56,6 @@ def product_list(request,cid):
     return render(request, 'shop/products.html', context)
 
 
-
 def product_detail(request,pid):
     product_object=Product.objects.get(pid=pid)
     prImages=product_object.prImages.all()
@@ -73,9 +73,6 @@ def product_detail(request,pid):
         'review_form':review_form
     }
     return render(request,'shop/product_detail.html',context)
-
-
-
 
 
 def tag_list(request,tag_slug=None):
@@ -126,6 +123,7 @@ def ajax_add_review(request, pid):
         }
     )
 
+
 def reply_view(request,pid):
     if request.method == 'POST':
         
@@ -151,6 +149,7 @@ def reply_view(request,pid):
     else:
         return JsonResponse({'error': 'Invalid request method.'}, status=400)
     
+
 def help_reply_tree(rid,nodes,visited):
 
     if rid in visited:
@@ -197,23 +196,6 @@ def reply_tree(request,pid):
         return JsonResponse({'error': 'Invalid request method'}, status=405)
 
 
-
-# def checkout(request):
- 
-#     if request.method == "POST":
-#         items = request.POST.get('items','')
-#         name = request.POST.get('name',"")
-#         email = request.POST.get('email',"")
-#         address = request.POST.get('address',"")
-#         city = request.POST.get('city',"")
-#         state =request.POST.get('state',"")
-#         zipcode = request.POST.get('zipcode',"")
-#         total = request.POST.get('total',"")
-#         order = Order(items=items,name=name,email=email,address=address,city=city,state=state,zipcode=zipcode,total=total)
-#         order.save()
- 
-#     return render(request,'shop/checkout.html')
-
 def register(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -228,6 +210,7 @@ def register(request):
         form = UserCreationForm()
     return render(request, 'shop/register.html', {'form': form})
 
+
 def user_login(request):
     if request.method == 'POST':
         form = AuthenticationForm(data=request.POST)
@@ -239,3 +222,38 @@ def user_login(request):
         form = AuthenticationForm()
     return render(request,'shop/register.html')
 
+def search(request):
+    query=request.GET.get("query")
+    products=Product.objects.filter(title__icontains=query).order_by("-date")
+    context={
+        "product_objects":products,
+        "query":query
+    }
+
+    return render(request,'shop/products.html',context)
+
+
+def add_to_cart(request):
+    cart_product={}
+    cart_product[str(request.GET['id'])]={
+        'title': request.GET['title'],
+        'qty': request.GET['qty'],
+        'price': request.GET['price'],
+    }
+
+    if 'cart_data_obj' in request.session:
+        if str(request.GET['id']) in request.session['cart_data_obj']:
+            cart_data = request.session['cart_data_obj']
+            cart_data[str(request.GET['id'])]['qty'] = int(cart_product[str(request.GET['id'])]['qty'])
+            cart_data.update(cart_data)
+            request.session['cart_data_obj']=cart_data
+
+        else:
+            cart_data=request.session['cart_data_obj']
+            cart_data.update(cart_product)
+            request.session['cart_data_obj']=cart_data
+
+    else:
+        request.session['cart_data_obj']=cart_product
+
+    return JsonResponse({"data":request.session['cart_data_obj'],'totalcartitems':len(request.session['cart_data_obj'])})
