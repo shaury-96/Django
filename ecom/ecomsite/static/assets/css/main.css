@@ -575,7 +575,7 @@ nav.main-menu ul ul.sub-menu {
   padding: 15px 15px;
   margin: 0;
   left: 0;
-  top: 50px;
+  top: 20px;
   border-radius: 3px;
   -webkit-transition: 0.3s;
   -o-transition: 0.3s;
@@ -2924,7 +2924,7 @@ input[type="submit"] {
   top: 30px; /* Adjust as needed */
   right: 0;
   background-color: white;
-  border: 1px solid #ccc;
+  /* border: 1px solid #ccc; */
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   width: 200px; /* Adjust width as needed */
   z-index: 1000;
