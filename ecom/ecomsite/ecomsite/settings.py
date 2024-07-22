@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'shop',
     'taggit',
     'ckeditor',
-    'django.contrib.admin',
+    'paypal.standard.ipn',
+    'django.contrib.admin', 
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -158,3 +159,5 @@ CKEDITOR_CONFIGS={
     }
 }
 
+PAYPAL_RECIEVER_MAIL=''
+PAYPAL_TEST= True
