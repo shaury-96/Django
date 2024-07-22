@@ -11,6 +11,10 @@ from django.http import JsonResponse
 from django.utils.dateformat import DateFormat
 from django.contrib.auth.decorators import login_required
 from urllib.parse import unquote
+from django.views.decorators.csrf import csrf_exempt
+from paypal.standard.forms import PayPalPaymentsForm
+from django.urls import reverse
+from django.conf import settings
 import json
 # from django.db.models.query import QuerySets
 
@@ -289,13 +293,36 @@ def cart_page(request):
     }
     return render(request, 'shop/cart.html', context)
 
-
+@login_required
 def checkout_page(request):
+    host=request.get_host()
+    paypal_dict={
+        'business':settings.PAYPAL_RECIEVER_MAIL,
+        'amount':'200',
+        'item_name':'ORD3',
+        'invoice':'INV3',
+        'currency_code':"USD",
+        'notify_url':'http://{}{}'.format(host,reverse("shop:paypal-ipn")),
+        'return_url':'http://{}{}'.format(host,reverse("shop:payment-success-page")),
+        'cancel_url':'http://{}{}'.format(host,reverse("shop:payment-failed-page")),
+    }
+    paypal_payment_button = PayPalPaymentsForm(initial=paypal_dict)
+
     cart_data = request.session.get('cart_data_obj', {})
     total_sum = sum(item['total'] for item in request.session['cart_data_obj'].values())
     context={
         'cart_data': cart_data,
-        'totalsum':total_sum
+        'totalsum':total_sum,
+        'paypal_payment_button':paypal_payment_button,
     }
     return render(request, 'shop/checkout.html',context)
+
+def payment_success_page(request):
+    return render(request,'shop/payment_success.html')
+
+def payment_failed_page(request):
+    return render(request, 'shop/payment_failed.html')
+
+
+
     

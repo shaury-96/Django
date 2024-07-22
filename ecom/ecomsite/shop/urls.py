@@ -16,6 +16,8 @@ urlpatterns=[
     path('add-to-cart/',views.add_to_cart,name='add-to-cart'),
     path('cart/',views.cart_page,name='cart-page'),
     path('checkout/',views.checkout_page,name='checkout-page'),
-    path('paypal/',include('paypal.standard.ipn.urls'))
+    path('paypal/',include('paypal.standard.ipn.urls')),
+    path('payment-success/',views.payment_success_page,name='payment-success-page'),
+    path('payment-failed/',views.payment_failed_page,name='payment-failed-page'),
 ]
 
