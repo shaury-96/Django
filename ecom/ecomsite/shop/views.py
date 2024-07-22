@@ -9,6 +9,8 @@ from django import template
 from .forms import ProductReviewForm
 from django.http import JsonResponse
 from django.utils.dateformat import DateFormat
+from django.contrib.auth.decorators import login_required
+from urllib.parse import unquote
 import json
 # from django.db.models.query import QuerySets
 
@@ -234,13 +236,25 @@ def search(request):
 
 
 def add_to_cart(request):
-    cart_product={}
-    cart_product[str(request.GET['id'])]={
-        'title': request.GET['title'],
-        'qty': request.GET['qty'],
-        'price': request.GET['price'],
-    }
+    
+    item_id = str(request.GET['id'])
+    title= request.GET['title']
+    qty= int(request.GET['qty'])
+    price= float(request.GET['price'])
+    total= price * qty
+    image= request.GET.get('image','https://picsum.photos/200/300')
 
+    cart_product={
+        item_id: {
+        'title': title,
+        'qty': qty,
+        'price': price,
+        'total': total,
+        'image': image
+        }
+    }
+    
+    print(cart_product)
     if 'cart_data_obj' in request.session:
         if str(request.GET['id']) in request.session['cart_data_obj']:
             cart_data = request.session['cart_data_obj']
@@ -255,5 +269,33 @@ def add_to_cart(request):
 
     else:
         request.session['cart_data_obj']=cart_product
+    
+    
+    return JsonResponse(
+        {
+            "data":request.session['cart_data_obj'],
+            'totalcartitems':len(request.session['cart_data_obj']),
+            
+            })
 
-    return JsonResponse({"data":request.session['cart_data_obj'],'totalcartitems':len(request.session['cart_data_obj'])})
+
+@login_required(login_url='/login/')
+def cart_page(request):
+    cart_data = request.session.get('cart_data_obj', {})
+    total_sum = sum(item['total'] for item in request.session['cart_data_obj'].values())
+    context={
+        'cart_data': cart_data,
+        'totalsum':total_sum
+    }
+    return render(request, 'shop/cart.html', context)
+
+
+def checkout_page(request):
+    cart_data = request.session.get('cart_data_obj', {})
+    total_sum = sum(item['total'] for item in request.session['cart_data_obj'].values())
+    context={
+        'cart_data': cart_data,
+        'totalsum':total_sum
+    }
+    return render(request, 'shop/checkout.html',context)
+    

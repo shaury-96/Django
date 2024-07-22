@@ -14,5 +14,7 @@ urlpatterns=[
     path('product/<pid>/reply_tree/',views.reply_tree,name='reply_tree'),
     path('search/',views.search,name='search'),
     path('add-to-cart/',views.add_to_cart,name='add-to-cart'),
+    path('cart/',views.cart_page,name='cart-page'),
+    path('checkout/',views.checkout_page,name='checkout-page')
 ]
 
