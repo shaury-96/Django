@@ -3,7 +3,7 @@ from taggit.models import Tag
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, authenticate
 from django.db.models import Avg
-from .models import Product, Category, ProductReview
+from .models import Product, Category, ProductReview, CartOrder, CartOrderItems
 from django.core.paginator import Paginator
 from django import template
 from .forms import ProductReviewForm
@@ -66,7 +66,7 @@ def product_detail(request,pid):
     product_object=Product.objects.get(pid=pid)
     prImages=product_object.prImages.all()
     rProducts=Product.objects.filter(category=product_object.category, product_status="published").exclude(pid=product_object.pid)[:3]
-    reviews=ProductReview.objects.filter(product=product_object).order_by('-date')
+    reviews=ProductReview.objects.filter(product=product_object, parent_review_id=None).order_by('-date')
     avg_rating=reviews.aggregate(rating=Avg('rating'))
     review_form=ProductReviewForm()
 
@@ -295,12 +295,37 @@ def cart_page(request):
 
 @login_required
 def checkout_page(request):
+
+    cart_total_amount=0
+    total_amount=0
+
+    if 'cart_data_obj' in request.session:
+        for pid,item in request.session['cart_data_obj'].items():
+            total_amount+= int(item['qty'])*float(item['price'])
+
+        order=CartOrder.objects.create(
+            user=request.user,
+            price=total_amount
+        )
+
+        for pid,item in request.session['cart_data_obj'].items():
+            cart_total_amount+=int(item['qty'])*float(item['price'])
+            cart_order_products= CartOrderItems.objects.create(
+                order=order,
+                invoice_no="INVOICE_NO-"+str(order.id),
+                item=item['title'],
+                image=item['image'],
+                qty=item['qty'],
+                price=item['price'],
+                # total=int(item['qty'])*float(item['price'])
+            )
+
     host=request.get_host()
     paypal_dict={
         'business':settings.PAYPAL_RECIEVER_MAIL,
-        'amount':'200',
-        'item_name':'ORD3',
-        'invoice':'INV3',
+        'amount':cart_total_amount+45,
+        'item_name':"ORDITEMNO"+str(order.id),
+        'invoice':"INVNO"+str(order.id),
         'currency_code':"USD",
         'notify_url':'http://{}{}'.format(host,reverse("shop:paypal-ipn")),
         'return_url':'http://{}{}'.format(host,reverse("shop:payment-success-page")),

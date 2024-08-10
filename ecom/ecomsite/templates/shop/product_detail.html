@@ -54,11 +54,11 @@
                 <div class="single-product-content">
                     <h3>{{product_object.title}}</h3>
                     <p class="single-product-pricing">
-                        <!-- <span>Per Kg</span>  -->
+             
                         {{product_object.price}}</p>
                     <p>{{product_object.description|safe}} product description...</p>
                     <div class="single-product-form">
-                        <!-- <form action="index.html"> -->
+                        
                             <input type="number" value="0" placeholder="0" id="product-quantity"><br>
                             <input type="hidden" value="{{product_object.id}}" class="product-id">
                             <input type="hidden" value="{{product_object.title}}" class="product-title">
@@ -96,77 +96,72 @@
               <button class="option" onclick="showContent('reviews')">Reviews</button>
             </div>
             <div class="content" id="infoContent">
-              <!-- Info content goes here -->
+             
               {{product_object.specs|safe}}
               
             </div>
             <div class="content" id="sellerContent" style="display: none;">
-              <!-- Seller content goes here -->
+       
               {{product_object.vendor}}<br>
               {{product_object.vendor.address}}
             </div>
             <div class="content" id="reviewsContent" style="display: none;">
-              <!-- Reviews content goes here -->
+            
 
               <div class="review-summary">
-                <!-- <h3>Customer Reviews</h3> -->
+                
                 <div class="average-rating">
                     <span id="avgrate">{{ avg_rating.rating|floatformat:1 }} out of 5.0</span>
                 </div>
-                <!-- <div class="rating-distribution">
+                
                     
-                </div> -->
             </div>
 
 
-              <div class="review-section">
+            <div class="review-section">
                 {% for review in reviews %}
-                <!-- {% if review.parent_review_id %}
-                    
-                {% else %} -->
-                <!-- {{review.user.first_name}} -->
+            
                 <div class="review" id="{{ review.rid }}" review-user="sds">
                     <div class="review-header">
                         <div class="user-icon">
                             <img src="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png" alt="User Icon">
                         </div>
                         <div class="review-info">
-
-                            <div class="review-date"><strong>{{review.user.username}}</strong> {{ review.date|date:"d M, Y" }}    
-                                {% if review.rating %} 
-                                    {% for star in review.rating|ljust:review.rating %}
-                                    <i class="fas fa-star text-warning"></i>
-                                    {% endfor %}
+            
+                            <div class="review-date"><strong>{{review.user.username}}</strong> {{ review.date|date:"d M, Y" }}
+                                {% if review.rating %}
+                                {% for star in review.rating|ljust:review.rating %}
+                                <i class="fas fa-star text-warning"></i>
+                                {% endfor %}
                                 {% endif %}
-                               
+            
                             </div>
                             <div class="review-rating">
-                               
+            
                             </div>
                         </div>
                     </div>
                     <div class="review-body">
                         {{ review.review }}
                         <div class="replies" id="replies-{{ review.rid }}" style="padding-left:20px ; padding-top: 10px;">
-                            
+            
                         </div>
-
+            
                     </div>
-                    
+            
                     <button id='preply' class="reply-btn">Reply</button>
                     <div class="reply-form" style="display: none;">
                         <input type="hidden" id="csrf_token" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
                         <input type="text" class="reply-text" placeholder="Enter your reply">
-                        <button reviewId="{{ review.rid }}" pid="{{review.product.pid}}" class="post-btn" id="postreviewid">Post</button>
+                        <button reviewId="{{ review.rid }}" pid="{{review.product.pid}}" class="post-btn"
+                            id="postreviewid">Post</button>
                     </div>
-
+            
                 </div>
-
-               
 
 
                 
-                <!-- {% endif %} -->
+                
                 {% empty %}
                 <p id="no-review">No reviews yet.</p>
                 {% endfor %}

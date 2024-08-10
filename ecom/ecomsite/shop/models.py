@@ -7,7 +7,7 @@ from ckeditor_uploader.fields import RichTextUploadingField
 
 
 STATUS_CHOICES=(
-    ("process","Processing"),
+    ("processing","Processing"),
     ("shipped","Shipped"),
     ("deliverd","Delivered"),
 )
