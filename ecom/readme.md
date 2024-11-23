@@ -61,7 +61,12 @@ This eCommerce platform is a feature-rich web application designed to provide a 
 ---
 
 ## Screenshots  
-![Home Page](https://github.com/shaury-96/Django/blob/master/ecom/Images/Screenshot%20(338).png "Home Page")
+<div style="display: flex; overflow-x: auto; gap: 10px;">
+  <img src="https://github.com/shaury-96/Django/blob/master/ecom/Images/Screenshot%20(338).png" alt="Home Page" width="300">
+  <img src="https://github.com/shaury-96/Django/blob/master/ecom/Images/Screenshot%20(339).png" alt="Products Page" width="300">
+  <img src="https://github.com/shaury-96/Django/blob/master/ecom/Images/Screenshot%20(340).png" alt="Admin Page" width="300">
+  <img src="https://github.com/shaury-96/Django/blob/master/ecom/Images/Screenshot%20(341).png" alt="Product detail page" width="300">
+</div>
 
 ---
 
